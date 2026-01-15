@@ -39,8 +39,8 @@ spec:
     }
     stages {
         stage('Unit tests') {
-            container('python'){
-                steps {
+            steps {
+                container('python'){
                     sh '''
                         pip install -r app/requirements
                         bandit -r . -x '/.venv/','/tests/'
@@ -50,7 +50,7 @@ spec:
                     '''
                 }
             }
-            
+        
         }
     }
 }
