@@ -15,12 +15,16 @@ apiVersion: v1
 kind: Pod
 spec:
   containers:
-  - name: shell
-    image: ubuntu
+  - name: python
+    image: python:3.9.12-alpine3.15
     command:
     - sleep
     args:
     - infinity
+  hostAliases:
+  - ip: "172.18.0.50"
+    hostnames:
+    - "gitea.localhost.com"  
     securityContext:
       # ubuntu runs as root by default, it is recommended or even mandatory in some environments (such as pod security admission "restricted") to run as a non-root user.
       runAsUser: 1000
@@ -29,16 +33,24 @@ spec:
             // container('shell') {
             //     sh 'hostname'
             // }
-            defaultContainer 'shell'
-            retries 2
+            // defaultContainer 'shell'
+            // retries 2
         }
     }
     stages {
-        stage('Main') {
-            steps {
-                sh 'hostname'
-                sh 'ls -l'
+        stage('Unit tests') {
+            container('python'){
+                steps {
+                    sh '''
+                        pip install -r app/requirements
+                        bandit -r . -x '/.venv/','/tests/'
+                        black .
+                        flake8 . --exclude .venv
+                        pytest -v --disable-warnings
+                    '''
+                }
             }
+            
         }
     }
 }
