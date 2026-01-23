@@ -1,0 +1,11 @@
+========================================
+   CREDENCIAIS DO ARGOCD
+========================================
+
+URL: http://argocd.localhost.com:8080/applications
+
+Usuário: admin
+Senha: 66aaij0bH2puYKqu
+
+========================================
+
