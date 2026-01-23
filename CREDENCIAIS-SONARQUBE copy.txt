@@ -1,0 +1,15 @@
+========================================
+   CREDENCIAIS DO SONARQUBE
+========================================
+
+URL: http://sonarqube.localhost.com:8080/account/reset_password
+
+Usuário: admin
+Senha: Admin12345678.
+
+========================================
+
+Como acessar:
+1. Certifique-se de que o port-forward está rodando:
+   kubectl port-forward -n ingress-nginx svc/ingress-nginx-controller 8080:80 8443:443
+
